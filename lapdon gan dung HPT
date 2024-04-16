@@ -1,0 +1,37 @@
+def jacobi_iteration(A, b, x0, epsilon, max_iterations):
+    n = len(A)
+    x = x0.copy()
+    iteration = 0
+    error = epsilon + 1
+
+    while error > epsilon and iteration < max_iterations:
+        x_new = x.copy()
+
+        for i in range(n):
+            sum_term = 0
+            for j in range(n):
+                if j != i:
+                    sum_term += A[i][j] * x[j]
+            x_new[i] = (b[i] - sum_term) / A[i][i]
+
+        error = max(abs(x_new[i] - x[i]) for i in range(n))
+        x = x_new
+        iteration += 1
+
+        print("Lần lặp", iteration, "- Nghiệm:", x)
+
+    if iteration == max_iterations:
+        print("Không hội tụ sau số lần lặp tối đa.")
+
+    return x
+
+A = [[4, 0.24, -0.08],
+     [0.09, 3, -0.15],
+     [0.04, -0.08, 4]]
+b = [8, 9, 20]
+x0 = [0, 0, 0]
+epsilon = 1e-6  # Sai số cần đạt được
+max_iterations = 100  # Số lần lặp tối đa
+
+solution = jacobi_iteration(A, b, x0, epsilon, max_iterations)
+print("Nghiệm của hệ phương trình là:", solution)
