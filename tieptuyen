@@ -1,1 +1,27 @@
 
+def f(x):
+    return x**3 + x**2 + x - 1
+
+def df(x):
+    return 3*x**2 + 2*x + 1
+
+def find_root_approximation(x0, epsilon=10^-6, max_iterations=1000):
+    x = x0
+
+    for iteration in range(max_iterations):
+        print("Lần lặp {}: x = {}".format(iteration, x))
+        x_new = x - f(x) / df(x)
+        if abs(x_new - x) <= epsilon:
+            return x_new, iteration + 1
+        x = x_new
+
+    return None, max_iterations
+
+x0 = float(input("Nhập giá trị ban đầu x0: "))
+
+root_approximation, num_iterations = find_root_approximation(x0)
+if root_approximation is not None:
+    print("Nghiệm gần đúng: {}".format(root_approximation))
+    print("Số lần lặp: {}".format(num_iterations))
+else:
+    print("Không tìm thấy nghiệm gần đúng trong số lần lặp tối đa.")
