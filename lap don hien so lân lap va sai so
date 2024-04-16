@@ -1,0 +1,43 @@
+import numpy as np
+
+def jacobi_iteration(A, b, x0, epsilon, max_iterations):
+    n = len(A)
+    x = x0.copy()
+    iteration = 0
+    error = epsilon + 1
+    errors = []  # Danh sách lưu trữ sai số sau mỗi lần lặp
+
+    while error > epsilon and iteration < max_iterations:
+        x_new = x.copy()
+
+        for i in range(n):
+            sum_term = 0
+            for j in range(n):
+                if j != i:
+                    sum_term += A[i][j] * x[j]
+            x_new[i] = (b[i] - sum_term) / A[i][i]
+
+        error = np.max(np.abs(np.array(x_new) - np.array(x)))  # Sai số là giá trị lệch lớn nhất
+        x = x_new
+        iteration += 1
+        errors.append(error)  # Thêm sai số vào danh sách
+
+        print("Lần lặp", iteration, "- Nghiệm:", x, "- Sai số:", error)
+
+    if iteration == max_iterations:
+        print("Không hội tụ sau số lần lặp tối đa.")
+
+    return x, errors
+
+
+A = [[4, 0.24, -0.08],
+     [0.09, 3, -0.15],
+     [0.04, -0.08, 4]]
+b = [8, 9, 20]
+x0 = [0, 0, 0]
+epsilon = 1e-6  # Sai số cần đạt được
+max_iterations = 100  # Số lần lặp tối đa
+
+solution, errors = jacobi_iteration(A, b, x0, epsilon, max_iterations)
+print("Nghiệm của hệ phương trình là:", solution)
+print("Sai số sau mỗi lần lặp:", errors)
