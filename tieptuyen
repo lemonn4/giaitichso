@@ -4,6 +4,12 @@ def f(x):
 
 def df(x):
     return 3*x**2 + 2*x + 1
+/*def f(x):
+    return 2 * math.log10(x) - 0.5*x +1
+
+def df(x):
+    return 2/(x* math.log(10))- 0.5
+*/
 
 def find_root_approximation(x0, epsilon=10^-6, max_iterations=1000):
     x = x0
